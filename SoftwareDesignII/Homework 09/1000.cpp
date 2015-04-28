@@ -6,7 +6,6 @@ using namespace std;
 class Rational
 {
 public:
-    Rational();
     Rational(long numerator, long denominator);
     long getNumerator();
     long getDenominator();
@@ -16,9 +15,6 @@ public:
     Rational divide(Rational &secondRational);
     int compareTo(Rational &secondRational);	// ”<”: -1, “=”: 0, “>”: 1
     bool equals(Rational &secondRational);
-    int intValue();
-    double doubleValue();
-    string toString();
  
     // Define function operators for relational operators
     bool operator<(Rational &secondRational);
@@ -67,10 +63,6 @@ private:
     long denominator;
     static long gcd(long n, long d);
 };
-
-Rational::Rational()
-{
-}
 
 Rational::Rational(long numerator, long denominator)
 {
@@ -149,22 +141,6 @@ bool Rational::equals(Rational &secondRational)
     else
         return false;
 }
-
-int Rational::intValue()
-{
-    return 0;
-}
-
-double Rational::doubleValue()
-{
-    return 0;
-}
-
-string Rational::toString()
-{
-    string str;
-    return str;
-}
  
 // Define function operators for relational operators
 bool Rational::operator<(Rational &secondRational)
@@ -214,7 +190,7 @@ bool Rational::operator==(Rational &secondRational)
     else
         return false;
 }
- 
+
 // Define function operators for arithmetic operators
 Rational Rational::operator+(Rational &secondRational)
 {
