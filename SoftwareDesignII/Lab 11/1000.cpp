@@ -16,7 +16,7 @@ public:
 	}
 	virtual void printMessage() const = 0;
 	virtual void deposit(double m) = 0;
-	virtual void withdraw(double& m) = 0;
+	virtual void withdraw(double m) = 0;
 	virtual double getMoney() const = 0;
 	
 protected:
@@ -41,15 +41,12 @@ public:
 		money += m;
 	}
 	
-	void withdraw(double& m)
+	void withdraw(double m)
 	{
 		if (money > m) 
 			money -= m;
 		else 
-		{
-			m = money;
 			money = 0;
-		}
 	}
 	
 	double getMoney() const
@@ -79,15 +76,12 @@ public:
 		money += m;
 	}
 	
-	void withdraw(double& m)
+	void withdraw(double m)
 	{
 		if (money > m) 
 			money -= m;
 		else 
-		{
-			m = money;
 			money = 0;
-		}
 	}
 	
 	double getMoney() const
@@ -149,6 +143,8 @@ void AccountManager::withdraw(Bank* bank, double money)
 
 void AccountManager::transfer(Bank* bank1, Bank* bank2, double money)
 {
+	if(bank1->getMoney() < money)	//	not enough money
+		money = bank1->getMoney();
 	bank1->withdraw(money);
 	bank2->deposit(money);
 }
