@@ -2,60 +2,70 @@
 #define _GAME_H
 
 #include "Dice.h"
-#include "Player.h"
+#include "PlayerList.h"
 #include <cstdio>
 #include <iostream>
 
 using std::cout;
 using std::endl;
 
-const int NUMBER_OF_PLAYER = 2;
-const int PLANE_OF_DICE = 6;
-
-class Game : public Dice
+class Game
 {
 public:
-    Game(int sizeOfMap);
+    Game();
     ~Game();
     void start();
+
+private:
+    int getWin() const;	//	return the win player's index, if no return -1
     void goAround();
     void printRound(const int indexOfPlayer) const;
     void printMap() const;
-    
-private:
-    int getWin() const;	//	return the win player's index, if no return -1
-    int sizeOfMap;
+    int mapSize;
     int round;
-    Player* listOfPlayer[NUMBER_OF_PLAYER];
+    PlayerList playerList;
+    Dice dice;
 };
 
-Game::Game(int sizeOfMap):Dice(PLANE_OF_DICE), round(0)
+Game::Game() : round(0)
 {
     //	initialize map
-    if (sizeOfMap < 1)
+    int mapSize;
+    printf("Please input map size: ");
+    scanf("%d", &mapSize);
+    while(mapSize < 1)
     {
-        do
-        {
-            printf("Your input is invalid, please try again!\nInput N: ");
-        }while(scanf("%d", &sizeOfMap) && sizeOfMap < 1);
+        printf("Your input is invalid, please try again!\nPlease input map size: ");
+        scanf("%d", &mapSize);
     }
-    this->sizeOfMap = sizeOfMap;
-    
+    this->mapSize = mapSize;
+
+    //  initialize plane of dice
+    int plane;
+    printf("Please input plane of dice: ");
+    scanf("%d", &plane);
+    while(plane < 1)
+    {
+        printf("Your input is invalid, please try again!\nPlease input plane of dice: ");
+        scanf("%d", &plane);
+    }
+    dice.setPlane(plane);
+
     //	initialize player
-    string nameOfPlayer[NUMBER_OF_PLAYER] = {"A", "B"};	//	can modify players' name
-    for (int i = 0; i < NUMBER_OF_PLAYER; ++i)
+    int player;
+    printf("How many players? ");
+    scanf("%d", &player);
+    while(player < 2)
     {
-        listOfPlayer[i] = new Player(nameOfPlayer[i]);
+        printf("Your input is invalid, please try again!\nHow many players? ");
+        scanf("%d", &player);
     }
+    playerList.create(player);
 }
 
 Game::~Game()
 {
-    for (int i = 0; i < NUMBER_OF_PLAYER; ++i)
-    {
-        delete listOfPlayer[i];
-        listOfPlayer[i] = NULL;
-    }
+    printf("Dice Game Exit\nSee you next time!\n");
 }
 
 void Game::printRound(const int indexOfPlayer) const
@@ -65,7 +75,7 @@ void Game::printRound(const int indexOfPlayer) const
     if (round != 0)
     {
         printf("Player ");
-        cout << listOfPlayer[indexOfPlayer]->getName();
+        cout << playerList[indexOfPlayer].getName();
         printf("'s turn\n");
     }
     printf("\n");
@@ -77,26 +87,26 @@ void Game::printMap() const
     if (getWin() == -1)	
     {
         //  print map
-        for (int i = 0; i <= sizeOfMap; ++i)
+        for (int i = 0; i <= mapSize; ++i)
         {
-            printf("%-4d", i);
+            printf("%-6d", i);
         }
         printf("\n");
         //  print player
-        for (int i = 0; i < NUMBER_OF_PLAYER; ++i)	
+        for (int i = 0; i < playerList.getSize(); ++i)	
         {
-            for (int j = 0; j <= listOfPlayer[i]->getPosition() - 1; ++j)
+            for (int j = 0; j <= playerList[i].getPosition() - 1; ++j)
             {
-                printf("    ");
+                printf("      ");
             }
-            cout << listOfPlayer[i]->getName() << endl;
+            cout << playerList[i].getName() << endl;
         }
         printf("\n");
     }
     //  print winer information
     else
     {
-        cout << listOfPlayer[getWin()]->getName() << " win!\n\n";
+        cout << playerList[getWin()].getName() << " win!\n\n";
     }
 }
 
@@ -104,9 +114,9 @@ void Game::printMap() const
 
 int Game::getWin() const
 {
-    for (int i = 0; i < NUMBER_OF_PLAYER; ++i)
+    for (int i = 0; i < playerList.getSize(); ++i)
     {
-        if (listOfPlayer[i]->getPosition() > sizeOfMap)
+        if (playerList[i].getPosition() > mapSize)
         {
             return i;
         }
@@ -117,7 +127,7 @@ int Game::getWin() const
 void Game::goAround()
 {
     //  find the index of player in this round
-    int indexOfPlayer = (round - 1) % NUMBER_OF_PLAYER;
+    int indexOfPlayer = (round - 1) % playerList.getSize();
 
     //  print round
     printRound(indexOfPlayer);
@@ -136,21 +146,21 @@ void Game::goAround()
         //  throw dice
         if (isRandom)
         {
-            diceNumber = ThrowDice();
+            diceNumber = dice.ThrowDice();
             printf("Dice number: %d\n", diceNumber);
         }
         //  read from stdin
         else
         {   
             printf("Dice number: ");
-            while(scanf("%d", &diceNumber) && !isValid(diceNumber))
+            while(scanf("%d", &diceNumber) && !dice.isValid(diceNumber))
             {
                 printf("Your input is invalid, please try again!\nDice number: ");
             }
         }
         printf("\n");
         //  set player's position
-        listOfPlayer[indexOfPlayer]->setPosition(listOfPlayer[indexOfPlayer]->getPosition() + diceNumber);
+        playerList[indexOfPlayer].setPosition(playerList[indexOfPlayer].getPosition() + diceNumber);
     }
 
     //  print map
@@ -167,6 +177,5 @@ void Game::start()
         goAround();
     }
 }
-
 
 #endif
