@@ -2,10 +2,7 @@
 
 int main(int argc, char const *argv[])
 {
-    printf("Input N: ");
-    int N;
-    scanf("%d", &N);
-    Game game(N);
+    Game game;
     game.start();
     return 0;
 }
