@@ -53,11 +53,11 @@ Game::Game() : round(0)
 
     //	initialize player
     int player;
-    printf("How many players? ");
+    printf("How many players?\n");
     scanf("%d", &player);
     while(player < 2)
     {
-        printf("Your input is invalid, please try again!\nHow many players? ");
+        printf("Your input is invalid, please try again!\nHow many players?\n");
         scanf("%d", &player);
     }
     playerList.create(player);
@@ -137,10 +137,10 @@ void Game::goAround()
     {
         //  the first player's input is from stdin
         bool isRandom;
-        if (indexOfPlayer == 0)
-            isRandom = false;
-        else
+        if (playerList[indexOfPlayer].isAI())
             isRandom = true;
+        else
+            isRandom = false;
 
         int diceNumber;
         //  throw dice

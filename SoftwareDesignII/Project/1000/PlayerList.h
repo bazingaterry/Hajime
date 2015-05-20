@@ -41,7 +41,23 @@ bool PlayerList::create(const int size)
 	        printf("Please input player%d's name: ", i);
 	        string name;
 	        cin >> name;
-	        listPtr[i] = new Player(name);
+
+	        printf("Is it a AI?(Yes or No)\n");
+	        string isAI;
+	        cin >> isAI;
+	        while (isAI != "Yes" && isAI != "No")
+	        {
+	        	printf("Please input again\nIs it a AI?(Yes or No)\n");
+	        	cin >> isAI;
+	        }
+	        if (isAI == "Yes")
+	        {
+	        	listPtr[i] = new AI(name);
+	        }
+	        else
+	        {
+	        	listPtr[i] = new Human(name);
+	        }
 	    }
 	    return true;
 	}
