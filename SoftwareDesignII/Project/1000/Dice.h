@@ -9,7 +9,7 @@ class Dice
 {
 public:
     Dice(const int plane = 0);
-    int ThrowDice();		                  //	return a random dice number
+    int throwDice();		                  //	return a random dice number
     int getPlane() const;
     bool isValid(const int diceNumber) const;
     bool setPlane(const int plane);           /*    set the plane, only can be used when the plane has not been set
@@ -41,9 +41,9 @@ Dice::Dice(const int plane) : seed((unsigned)time(NULL))
         this->plane = 0;
 }
 
-int Dice::ThrowDice()
+int Dice::throwDice()
 {
-    srand(seed);	//	use time as seed
+    srand(seed);
     seed = rand();
     return rand() % plane + 1;
 }

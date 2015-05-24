@@ -18,7 +18,7 @@ public:
 
 private:
     int getWin() const;	//	return the win player's index, if no return -1
-    void goAround();
+    void goARound();
     void printRound(const int indexOfPlayer) const;
     void printMap() const;
     int mapSize;
@@ -124,7 +124,7 @@ int Game::getWin() const
     return -1;	// nobody win
 }
 
-void Game::goAround()
+void Game::goARound()
 {
     //  find the index of player in this round
     int indexOfPlayer = (round - 1) % playerList.getSize();
@@ -135,32 +135,9 @@ void Game::goAround()
     //  if it is not first round
     if (round != 0)
     {
-        //  the first player's input is from stdin
-        bool isRandom;
-        if (playerList[indexOfPlayer].isAI())
-            isRandom = true;
-        else
-            isRandom = false;
-
-        int diceNumber;
         //  throw dice
-        if (isRandom)
-        {
-            diceNumber = dice.ThrowDice();
-            printf("Dice number: %d\n", diceNumber);
-        }
-        //  read from stdin
-        else
-        {   
-            printf("Dice number: ");
-            while(scanf("%d", &diceNumber) && !dice.isValid(diceNumber))
-            {
-                printf("Your input is invalid, please try again!\nDice number: ");
-            }
-        }
+        playerList[indexOfPlayer].throwDice(dice);
         printf("\n");
-        //  set player's position
-        playerList[indexOfPlayer].setPosition(playerList[indexOfPlayer].getPosition() + diceNumber);
     }
 
     //  print map
@@ -174,7 +151,7 @@ void Game::start()
 {
     while(getWin() == -1)
     {
-        goAround();
+        goARound();
     }
 }
 
