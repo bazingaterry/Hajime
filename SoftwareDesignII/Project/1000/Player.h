@@ -12,7 +12,7 @@ public:
     string getName() const;
     int getPosition() const;
     void setPosition(const int position);
-    virtual int ThrowDice(Dice dice) = 0;
+    virtual int throwDice(Dice& dice) = 0;
     virtual bool isAI() = 0;
     
 protected:
@@ -45,7 +45,7 @@ class AI : public Player
 {
 public:
     AI(const string name);
-    int ThrowDice(Dice dice);
+    int throwDice(Dice& dice);
     bool isAI();
 };
 
@@ -53,10 +53,11 @@ AI::AI(const string name) : Player(name)
 {
 }
 
-int AI::ThrowDice(Dice dice)
+int AI::throwDice(Dice& dice)
 {
-    int diceNumber = dice.ThrowDice();
+    int diceNumber = dice.throwDice();
     position += diceNumber;
+    printf("Dice number: %d\n", diceNumber);
     return diceNumber;
 }
 
@@ -69,7 +70,7 @@ class Human : public Player
 {
 public:
     Human(const string name);
-    int ThrowDice(Dice dice);
+    int throwDice(Dice& dice);
     bool isAI();
 };
 
@@ -77,7 +78,7 @@ Human::Human(const string name) : Player(name)
 {
 }
 
-int Human::ThrowDice(Dice dice)
+int Human::throwDice(Dice& dice)
 {
     int diceNumber;
     printf("Dice number: ");
