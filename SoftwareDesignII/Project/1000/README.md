@@ -16,9 +16,11 @@
 ###3.程序设计
 
 - 游戏过程分析
+
 ![Alt text](./pic/Dice Game Flowchart.png)
 
 - 系统模块设计
+
 ![Alt text](./pic/UML.png)
 
 1. `Player`抽象类管理每个玩家的数据，并派生出`AI`类和`Human`类，分别对应计算机控制的角色和用户控制的角色。`Player`类成员变量记录实例的名字和位置。
@@ -27,4 +29,5 @@
 4. `Game`类允许创建Dice Game的实例，构造之后会自动创建一个`Dice`和`PlayerList`实例供`Game`实例内部调用。
 	
 - 游戏具体流程
+
 ![Alt text](./pic/Game Flowchart.png)
