@@ -57,7 +57,7 @@ int AI::throwDice(Dice& dice)
 {
     int diceNumber = dice.throwDice();
     position += diceNumber;
-    printf("Dice number: %d\n", diceNumber);
+    printf("Dice number: %d\n\n", diceNumber);
     return diceNumber;
 }
 
@@ -86,6 +86,7 @@ int Human::throwDice(Dice& dice)
     {
         printf("Your input is invalid, please try again!\nDice number: ");
     }
+    printf("\n");
     position += diceNumber;
     return diceNumber;
 }

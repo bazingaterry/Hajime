@@ -137,7 +137,6 @@ void Game::goARound()
     {
         //  throw dice
         playerList[indexOfPlayer].throwDice(dice);
-        printf("\n");
     }
 
     //  print map

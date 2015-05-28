@@ -6,39 +6,42 @@
 using std::cin;
 using std::cerr;
 
-const int MAXSIZE = 100;
-
 class PlayerList
 {
 public:
     PlayerList();								//	empty list is created by default
     bool create(const int size);				//	creat a player list, if succeed return true, else return false
     ~PlayerList();
-    Player& operator[] (const int index) const;		//	use [] to get the player
+    Player& operator[] (const int index) const;		//	use [] to reach the player
     int getSize() const;
 
 private:
-    Player* listPtr[MAXSIZE];								
+    Player** listPtr;								
     int size;									//	size of the list
+    Player* dummyPtr;
 };
 
 PlayerList::PlayerList()
 {
 	this->size = 0;
+	listPtr = NULL;
+    dummyPtr = new AI("dummy");
 }
 
 bool PlayerList::create(const int size)
 {
-    if(this->size != 0 || size > MAXSIZE)	//	the list is not empty or invalid
+    if(this->size != 0)	//	the list is not empty or invalid
     {
 	    return false;
 	}
 	else
 	{
 		this->size = size;
+		listPtr = new Player*[size];
 	    for (int i = 0; i < size; ++i)
 	    {
-	        printf("Please input player%d's name: ", i);
+	        printf("\n");
+            printf("Please input player%d's name: ", i);
 	        string name;
 	        cin >> name;
 
@@ -70,6 +73,9 @@ PlayerList::~PlayerList()
     	delete listPtr[i];
 	    listPtr[i] = NULL;
     }
+    delete[] listPtr;
+    listPtr = NULL;
+    delete dummyPtr;
 }
 
 Player& PlayerList::operator[] (const int index) const
@@ -82,6 +88,7 @@ Player& PlayerList::operator[] (const int index) const
 	else
 	{
 		cerr << "Out of boundry!\n";
+        return *dummyPtr;
 	}
 }
 
