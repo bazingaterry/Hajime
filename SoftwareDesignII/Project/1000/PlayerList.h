@@ -2,9 +2,10 @@
 #define _PLAYER_LIST_H 
 
 #include "Player.h"
+#include <stdexcept>
 #include <iostream>
 using std::cin;
-using std::cerr;
+using std::out_of_range;
 
 class PlayerList
 {
@@ -18,83 +19,79 @@ public:
 private:
     Player** listPtr;								
     int size;									//	size of the list
-    Player* dummyPtr;
 };
 
 PlayerList::PlayerList()
 {
-	this->size = 0;
-	listPtr = NULL;
-    dummyPtr = new AI("dummy");
+    this->size = 0;
+    listPtr = NULL;
 }
 
 bool PlayerList::create(const int size)
 {
-    if(this->size != 0)	//	the list is not empty or invalid
+    if(this->size != 0) //  the list is not empty or invalid
     {
-	    return false;
-	}
-	else
-	{
-		this->size = size;
-		listPtr = new Player*[size];
-	    for (int i = 0; i < size; ++i)
-	    {
-	        printf("\n");
+        return false;
+    }
+    else
+    {
+        this->size = size;
+        listPtr = new Player*[size];
+        for (int i = 0; i < size; ++i)
+        {
+            printf("\n");
             printf("Please input player%d's name: ", i);
-	        string name;
-	        cin >> name;
+            string name;
+            cin >> name;
 
-	        printf("Is it a AI?(Yes or No)\n");
-	        string isAI;
-	        cin >> isAI;
-	        while (isAI != "Yes" && isAI != "No")
-	        {
-	        	printf("Please input again\nIs it a AI?(Yes or No)\n");
-	        	cin >> isAI;
-	        }
-	        if (isAI == "Yes")
-	        {
-	        	listPtr[i] = new AI(name);
-	        }
-	        else
-	        {
-	        	listPtr[i] = new Human(name);
-	        }
-	    }
-	    return true;
-	}
+            printf("Is it a AI?(Yes or No)\n");
+            string isAI;
+            cin >> isAI;
+            while (isAI != "Yes" && isAI != "No")
+            {
+                printf("Please input again\nIs it a AI?(Yes or No)\n");
+                cin >> isAI;
+            }
+            if (isAI == "Yes")
+            {
+                listPtr[i] = new AI(name);
+            }
+            else
+            {
+                listPtr[i] = new Human(name);
+            }
+        }
+        return true;
+    }
 }
 
 PlayerList::~PlayerList()
 {
     for (int i = 0; i < size; ++i)
     {
-    	delete listPtr[i];
-	    listPtr[i] = NULL;
+        delete listPtr[i];
+        listPtr[i] = NULL;
     }
     delete[] listPtr;
     listPtr = NULL;
-    delete dummyPtr;
 }
 
 Player& PlayerList::operator[] (const int index) const
 {
-	if (0 <= index && index <= size - 1)
-	{
-		return *listPtr[index];
-	}
-	//	out of boundry
-	else
-	{
-		cerr << "Out of boundry!\n";
-        return *dummyPtr;
-	}
+    if (0 <= index && index <= size - 1)
+    {
+        return *listPtr[index];
+    }
+    //  out of boundry
+    else
+    {
+        throw out_of_range("Out of boundry exeception");
+    }
 }
 
 int PlayerList::getSize() const
 {
-	return size;
+    return size;
 }
 
 #endif

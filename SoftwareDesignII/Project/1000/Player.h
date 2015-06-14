@@ -20,6 +20,22 @@ protected:
     int position;
 };
 
+class AI : public Player
+{
+public:
+    AI(const string name);
+    int throwDice(Dice& dice);
+    bool isAI();
+};
+
+class Human : public Player
+{
+public:
+    Human(const string name);
+    int throwDice(Dice& dice);
+    bool isAI();
+};
+
 Player::Player(const string name)
 {
     this->name = name;
@@ -40,15 +56,6 @@ void Player::setPosition(const int position)
 {
     this->position = position;
 }
-
-class AI : public Player
-{
-public:
-    AI(const string name);
-    int throwDice(Dice& dice);
-    bool isAI();
-};
-
 AI::AI(const string name) : Player(name)
 {
 }
@@ -65,15 +72,6 @@ bool AI::isAI()
 {
     return true;
 }
-
-class Human : public Player
-{
-public:
-    Human(const string name);
-    int throwDice(Dice& dice);
-    bool isAI();
-};
-
 Human::Human(const string name) : Player(name)
 {
 }

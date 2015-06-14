@@ -29,7 +29,7 @@ private:
 
 Game::Game() : round(0)
 {
-    //	initialize map
+    //  initialize map
     int mapSize;
     printf("Please input map size: ");
     scanf("%d", &mapSize);
@@ -51,7 +51,7 @@ Game::Game() : round(0)
     }
     dice.setPlane(plane);
 
-    //	initialize player
+    //  initialize player
     int player;
     printf("How many players?\n");
     scanf("%d", &player);
@@ -84,7 +84,7 @@ void Game::printRound(const int indexOfPlayer) const
 void Game::printMap() const
 {
     //  nobody win
-    if (getWin() == -1)	
+    if (getWin() == -1) 
     {
         //  print map
         for (int i = 0; i <= mapSize; ++i)
@@ -93,7 +93,7 @@ void Game::printMap() const
         }
         printf("\n");
         //  print player
-        for (int i = 0; i < playerList.getSize(); ++i)	
+        for (int i = 0; i < playerList.getSize(); ++i)  
         {
             for (int j = 0; j <= playerList[i].getPosition() - 1; ++j)
             {
@@ -121,7 +121,7 @@ int Game::getWin() const
             return i;
         }
     }
-    return -1;	// nobody win
+    return -1;  // nobody win
 }
 
 void Game::goARound()
