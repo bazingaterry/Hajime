@@ -12,6 +12,7 @@ class PlayerList
 public:
     PlayerList();								//	empty list is created by default
     bool create(const int size);				//	creat a player list, if succeed return true, else return false
+    bool destroy();                              //  destroy the player list
     ~PlayerList();
     Player& operator[] (const int index) const;		//	use [] to reach the player
     int getSize() const;
@@ -65,15 +66,28 @@ bool PlayerList::create(const int size)
     }
 }
 
+bool PlayerList::destroy()
+{
+    if (listPtr == NULL)
+    {
+        return false;
+    }
+    else
+    {
+        for (int i = 0; i < size; ++i)
+        {
+            delete listPtr[i];
+            listPtr[i] = NULL;
+        }
+        delete[] listPtr;
+        listPtr = NULL;
+        return true;
+    }
+}
+
 PlayerList::~PlayerList()
 {
-    for (int i = 0; i < size; ++i)
-    {
-        delete listPtr[i];
-        listPtr[i] = NULL;
-    }
-    delete[] listPtr;
-    listPtr = NULL;
+    destroy();
 }
 
 Player& PlayerList::operator[] (const int index) const

@@ -17,7 +17,6 @@ public:
                                               */
 private:
     int plane;					            //	the plane of the dice
-    unsigned int seed;
 };
 
 bool Dice::setPlane(const int plane)
@@ -33,18 +32,17 @@ bool Dice::setPlane(const int plane)
     }
 }
 
-Dice::Dice(const int plane) : seed((unsigned)time(NULL))
+Dice::Dice(const int plane)
 {
     if (plane > 0)
         this->plane = plane;
     else
         this->plane = 0;
+    srand((unsigned)time(NULL));
 }
 
 int Dice::throwDice()
 {
-    srand(seed);
-    seed = rand();
     return rand() % plane + 1;
 }
 
