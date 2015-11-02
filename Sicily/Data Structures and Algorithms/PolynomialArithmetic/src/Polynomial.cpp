@@ -9,10 +9,12 @@
 #include "Polynomial.hpp"
 #include <cmath>
 
-Polynomial::Polynomial()
+Polynomial::Polynomial(bool isOperator, char operation)
 {
     maxDegree = 0;
     minDegree = 0;
+    this->isOperator = isOperator;
+    if (isOperator) this->operation = operation;
 }
 
 double Polynomial::getCoefficient(const int& degree) const
@@ -41,6 +43,11 @@ int Polynomial::getMaxDegree() const
 int Polynomial::getMinDegree() const
 {
     return minDegree;
+}
+
+char Polynomial::getOperation() const
+{
+    return operation;
 }
 
 Polynomial Polynomial::operator+(const Polynomial& polynomial)
@@ -82,33 +89,71 @@ Polynomial Polynomial::operator*(const Polynomial& polynomial)
     return result;
 }
 
-std::ostream& operator<<(std::ostream& os, Polynomial polynomial)
+bool Polynomial::operator==(const Polynomial& polynomial)
 {
-    if (polynomial.getMaxDegree() == 0 && polynomial.getMinDegree() == 0)
+    if (this->isOperator != polynomial.isOperator)
     {
-        os << polynomial.getCoefficient(0);
+        return false;
     }
     else
     {
-        for (int degree = polynomial.getMaxDegree(); degree >= polynomial.getMinDegree(); --degree)
+        if (this->isOperator)
         {
-            if (polynomial.getCoefficient(degree) != 0)
+            return this->operation == polynomial.getOperation();
+        }
+        else
+        {
+            for (int degree = std::min(this->getMinDegree(), polynomial.getMinDegree()); degree <= std::max(this->getMaxDegree(), polynomial.getMaxDegree()); ++degree)
             {
-            	if (polynomial.getCoefficient(degree) >= 0) os << " + ";
-            		else os << " - ";
-            	if (degree == 0)
+                if (this->getCoefficient(degree) != polynomial.getCoefficient(degree))
+                    return false;
+            }
+            return true;
+        }
+    }
+}
+
+bool Polynomial::operator!=(const Polynomial& polynomial)
+{
+    return !(*this == polynomial);
+}
+
+std::ostream& operator<<(std::ostream& os, Polynomial polynomial)
+{
+    if (polynomial.isOperator)
+    {
+        os << polynomial.operation;
+    }
+    else
+    {
+        if (polynomial.getMaxDegree() == 0 && polynomial.getMinDegree() == 0)
+        {
+            os << polynomial.getCoefficient(0);
+        }
+        else
+        {
+            for (int degree = polynomial.getMaxDegree(); degree >= polynomial.getMinDegree(); --degree)
+            {
+                if (polynomial.getCoefficient(degree) != 0)
                 {
-                    os << std::abs(polynomial.getCoefficient(degree));
-                    return os;
-                }
-                else
-                {
-                    if (std::abs(polynomial.getCoefficient(degree)) != 1)
+                	if (polynomial.getCoefficient(degree) >= 0) 
+                        os << "+";
+            		else os << "-";
+
+                	if (degree == 0)
+                    {
                         os << std::abs(polynomial.getCoefficient(degree));
-                    if (degree == 1)
-                        os << "x";
+                        return os;
+                    }
                     else
-                        os << "x^" << degree;
+                    {
+                        if (std::abs(polynomial.getCoefficient(degree)) != 1)
+                            os << std::abs(polynomial.getCoefficient(degree));
+                        if (degree == 1)
+                            os << "x";
+                        else
+                            os << "x^" << degree;
+                    }
                 }
             }
         }

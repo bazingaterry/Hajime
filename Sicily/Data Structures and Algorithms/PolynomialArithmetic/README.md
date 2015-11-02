@@ -30,11 +30,65 @@ Polynomial Arithmetic : 利用面向对象程序设计思想，设计程序进�
 
 增加 `iostream`的友元函数，使得可以使用`cout`输出多项式的值。
 
+拓展`Polynomial` 类，使得其可以保存运算符，便于使用`std::stack<Polynomial>`和`stl::deque<Polynomial>`储存。
+
+先将 infix expression 转换成 postfix expression，处理括号和运算优先级问题，最后通过计算 postfix expression 得出结果。
+
 ### 4.程序运行与测试
 
 代码在 `/src` 目录，已经为 OS X 系统和 Windows 系统编译好二进制文件，在 `/build`目录，若需再次编译，由于用到了 C++11 的特性，需要开启编译器 C++11 的支持。
 
 测试样例在 `/test` 目录，标准输入输出都重定向到了`test*.txt`文件。
+
+- 若需要输入多项式，请以次数系数成对输入，以空格隔开，每个多项式一行。例如`3x^4-2x^-1`请输入`4 3 -1 -2`。
+- 若输入运算符或括号` + - * ( )`，输入时每一个占一行。
+- 结束输入请输入EOF。Windows 下是 `Ctrl + z`，Unix 下是 `Ctrl + d`。
+
+case 0:
+
+``` 
+Please input degree and coefficient separate by a space in one line
+Please input one operation (+ - *) in one line
+Please end you input by EOF
+(
+1 9 4 5
++
+1 8 7 4
+)
+*
+(
+1 9 4 5
+-
+1 8 7 4
+)
+The postfix expression is : 
+(+5x^4+9x)(+4x^7+8x)(+)(+5x^4+9x)(+4x^7+8x)(-)(*)
+The result is : 
++16x^14+39x^8-90x^5-17x^2
+```
+
+case 1:
+
+``` 
+Please input degree and coefficient separate by a space in one line
+Please input one operation (+ - *) in one line
+Please end you input by EOF
+1 2 3 4
++
+(
+-1 -2 -3 -4
+*
+(
+2 4 6 8
+-
+1 8 7 4
+)
+)
+The postfix expression is : 
+(+4x^3+2x)(-2x^-1-4x^-3)(+8x^6+4x^2)(+4x^7+8x)(-)(*)(+)
+The result is : 
+-8x^6+16x^5-16x^4+36x^3+10x-16
+```
 
 ### 5.实验总结与心得
 
@@ -50,6 +104,3 @@ Polynomial Arithmetic : 利用面向对象程序设计思想，设计程序进�
 
 `/src/*` 
 
-`/build/*` 
-
-`/test/*`

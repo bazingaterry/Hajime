@@ -15,14 +15,18 @@
 class Polynomial
 {
 public:
-	Polynomial();
+	Polynomial(bool isOperator = false, char operation = 0);
     double getCoefficient(const int& degree) const;
     void setCoefficient(const int& degree, const double& coefficient);
     int getMaxDegree() const;
     int getMinDegree() const;
+    bool isOperator;
+    char getOperation() const;
     Polynomial operator+(const Polynomial& polynomial);
     Polynomial operator-(const Polynomial& polynomial);
     Polynomial operator*(const Polynomial& polynomial);
+    bool operator==(const Polynomial& polynomial);
+    bool operator!=(const Polynomial& polynomial);
     friend std::ostream& operator<<(std::ostream& os, Polynomial polynomial);
 
 private:
@@ -31,6 +35,7 @@ private:
     int updateMaxDegree();
     int updateMinDegree();
     std::map<int, double> storedPolynomial;
+    char operation;
 };
 
 #endif /* Polynomial_hpp */
