@@ -2,15 +2,15 @@
 int array[1000000];
 int tempArray[1000000];
 
-long long Merge(int beg, int mid, int end)
+long long Merge(int begin, int mid, int end)
 {
-	for (int i = beg; i <= end; ++i)
+	for (int i = begin; i <= end; ++i)
 		tempArray[i] = array[i];
 
-	int i = beg;
+	int i = begin;
 	int j = mid + 1;
-	int k = beg;
-	long long inversion = 0;
+	int k = begin;
+	long long count = 0;
 
 	while (i <= mid && j <= end)
 	{
@@ -19,7 +19,7 @@ long long Merge(int beg, int mid, int end)
 		else
 		{
 			array[k++] = tempArray[j++];
-			inversion += (mid - i + 1);
+			count += (mid - i + 1);
 		}
 	}
     while (i <= mid)
@@ -27,18 +27,18 @@ long long Merge(int beg, int mid, int end)
     while (j <= end)
 		array[k++] = tempArray[j++];
 	
-	return inversion;
+	return count;
 }
 
-long long MergeInversion(int beg, int end)
+long long MergeInversion(int begin, int end)
 {
 	long long inversions = 0;
-	if (beg < end)
+	if (begin < end)
 	{
-		int mid = (beg + end) / 2;
-		inversions += MergeInversion(beg, mid);
-		inversions += MergeInversion(mid + 1, end);
-		inversions += Merge(beg, mid, end);
+		int mid = (begin + end)/2;
+		inversions += MergeInversion(begin, mid);
+		inversions += MergeInversion(mid+1, end);
+		inversions += Merge(begin, mid, end);
 	}
 	return inversions;
 }
