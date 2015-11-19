@@ -11,88 +11,95 @@ void mergesort(linkedlist*& head, int length)
 {
     if (length > 1)
     {
-        //  divide the first part
-        int mid = length / 2;
-        mergesort(head, mid);
-        
+        const int mid = length / 2;
         //  attach the middle of the list
         linkedlist* midPtr = head;
         for (int i = 0; i < mid; ++i)
             midPtr = midPtr->next;
+
+        //  divide the first part
+        mergesort(head, mid);
+        
         //  divide the second part
         mergesort(midPtr, length - mid);
         
-        //  store the linked list temporary
-        int* tempArray = new int[length];
-        linkedlist* tempPtr = head;
-        //  copy the element
-        for (int i = 0; i < length; ++i)
-        {
-            tempArray[i] = tempPtr->data;
-            tempPtr = tempPtr->next;
-        }
+        //  creat head pointer
+        linkedlist* tempPtr = new linkedlist;
+        //  record head pointer
+        linkedlist* headPtr = tempPtr;
         //  merge
         int first = 0;
         int second = mid;
-        tempPtr = head;
         while (first < mid && second < length)
         {
-            if (tempArray[first] < tempArray[second])
+            if (head->data < midPtr->data)
             {
-                tempPtr->data = tempArray[first++];
+                tempPtr->next = head;
+                head = head->next;
                 tempPtr = tempPtr->next;
+                first++;
             }
             else
             {
-                tempPtr->data = tempArray[second++];
+                tempPtr->next = midPtr;
+                midPtr = midPtr->next;
                 tempPtr = tempPtr->next;
+                second++;
             }
         }
         while (first < mid)
         {
-            tempPtr->data = tempArray[first++];
+            tempPtr->next = head;
+            head = head->next;
             tempPtr = tempPtr->next;
+            first++;
         }
         while (second < length)
         {
-            tempPtr->data = tempArray[second++];
+            tempPtr->next = midPtr;
+            midPtr = midPtr->next;
             tempPtr = tempPtr->next;
+            second++;
         }
-        delete[] tempArray;
+        tempPtr->next = NULL;
+        head = headPtr->next;
+        delete headPtr;
     }
 }
 
 int main(int argc, char const *argv[])
 {
-    int n = 5;
+    int n = 9;
     linkedlist* head = new linkedlist;
-    head->data = 5;
+    head->data = -1;
     linkedlist* pre = head;
-    while (n--)
+    srand((unsigned)time(NULL));
+    for (int i = 0; i < n; i++)
     {
         pre->next = new linkedlist;
         pre = pre->next;
-        pre->data = n;
+        pre->data = rand() % 100;
     }
     pre->next = NULL;
-       
-    pre = head;   
+    
+    pre = head;
     cout << "before sort:\n";
     while (pre != NULL)
     {
         cout << pre->data << ' ';
         pre = pre->next;
     }
-
-    mergesort(head, 6);
+    cout << endl;
+    
+    mergesort(head, n + 1);
     
     pre = head;
-    cout << "\nafter sort:\n";
+    cout << "after sort:\n";
     while (pre != NULL)
     {
         cout << pre->data << ' ';
         pre = pre->next;
     }
-    
+    cout << endl;
     return 0;
 }
