@@ -13,8 +13,7 @@ int main()
             cout << i << endl;
             n=n/i;
             i=1;
-        }
-        
+        }  
     }
     
     return 0;

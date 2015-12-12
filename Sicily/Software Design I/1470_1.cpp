@@ -1,15 +1,14 @@
 #include <iostream>
 #include <cmath>
-using namespace std;
 
-int sumDigits(long n)
+int sumDigits(int num)
 {
-	n=abs(n);
-	int sum=0;
-	while (n!=0)
+	num = abs(num);
+	int sum = 0;
+	while (num)
 	{
-		sum+=n%10;
-		n=n/10;
+		sum += num % 10;
+		num = num / 10;
 	}
 	return sum;
 }
