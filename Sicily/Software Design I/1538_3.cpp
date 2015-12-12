@@ -21,7 +21,6 @@ int main(int argc, char const *argv[])
 		list[i]=highest;
 	}
 
-
 	while(m--)
 	{
 		int x;
@@ -29,6 +28,5 @@ int main(int argc, char const *argv[])
 		printf("%d\n",list[x-1]);
 	}
 
-	
 	return 0;
 }
