@@ -51,6 +51,21 @@ private:
             preorderTraversal(_root->rightChild);
         }
     }
+    void remove(Node*& _root)
+    {
+        if (_root->leftChild != NULL)
+        {
+            remove(_root->leftChild);
+            delete _root->leftChild;
+        }
+        if (_root->rightChild != NULL)
+        {
+            remove(_root->rightChild);
+            delete _root->rightChild;
+        }
+        delete _root;
+        _root = NULL;
+    }
 public:
     BinarySearchTree()
     {
@@ -66,6 +81,10 @@ public:
         cout << endl;
         preorderTraversal(root);
         cout << endl;
+    }
+    ~BinarySearchTree()
+    {
+        remove(root);
     }
 };
 
