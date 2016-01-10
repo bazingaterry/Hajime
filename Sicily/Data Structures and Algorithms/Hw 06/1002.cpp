@@ -11,7 +11,6 @@ struct cmp
 	}
 };
 
-
 int main(int argc, char const *argv[])
 {
 	int n;
@@ -24,7 +23,6 @@ int main(int argc, char const *argv[])
 			cin >> num;
 			pq.push(num);
 		}
-
 		while (pq.size() >= 2)
 		{
 			cout << pq.top() << " ";
