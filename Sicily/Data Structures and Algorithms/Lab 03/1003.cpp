@@ -4,17 +4,17 @@
 
 using namespace std;
 
-bool isChar(char ch)
+inline bool isChar(char ch)
 {
     return ('a' <= ch && ch <= 'z') || ('A' <= ch && ch <= 'Z');
 }
 
-bool isOperator(char ch)
+inline bool isOperator(char ch)
 {
     return (ch == '+' || ch == '-' || ch == '*' || ch == '/');
 }
 
-bool isBrackets(char ch)
+inline bool isBrackets(char ch)
 {
     return (ch == '(' || ch == ')');
 }

@@ -11,13 +11,8 @@ int main(int argc, char const *argv[])
     while (cin >> N >> S >> T)
     {
         for (int i = 0; i < N; ++i)
-        {
             for (int j = 0; j < N; ++j)
-            {
                 cin >> mat[i][j];
-            }
-        }
-
         bool flag[100] = {};
         queue<int> q;
         q.push(S);
