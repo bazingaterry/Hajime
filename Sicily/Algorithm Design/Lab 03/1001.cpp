@@ -16,7 +16,7 @@ mat matMultiMod(const mat& a, const mat& b) // 2x2 matrix multi mod
 	{
 		for (int j = 0; j < 2; j++)
 		{
-			result.m[i][j] = ((a.m[i][0] * b.m[0][j]) % MOD+(a.m[i][1] * b.m[1][j]) % MOD) % MOD;
+			result.m[i][j] = ((a.m[i][0] * b.m[0][j]) % MOD + (a.m[i][1] * b.m[1][j]) % MOD) % MOD;
 		}
 	}
 	return result;
