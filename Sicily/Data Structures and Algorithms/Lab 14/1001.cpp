@@ -7,12 +7,12 @@ class UnionFind
 private:
     int* father;
     const int capacity;
-    
+
 public:
     UnionFind(int cap) : capacity(cap + 1)
     {
         father = new int[cap + 1];
-        for (int i = 1; i <= cap; ++i)
+        for (int i = 0; i < capacity; ++i)
             father[i] = i;
     }
     ~UnionFind()
