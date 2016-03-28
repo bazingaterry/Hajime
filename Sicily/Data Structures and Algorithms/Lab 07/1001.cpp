@@ -9,17 +9,17 @@ bool tryK(const vector<long long>& v, long long m, long long k)
 	long long sum = 0;
 	for (int index = 0; index < v.size(); ++index)
 	{
-		if (v[index] > k) 
+		if (v[index] > k)
 			return false;
 		else
 		{
 			if (sum + v[index] <= k)
-					sum += v[index];
-				else
-				{
-					count++;
-					sum = v[index];
-				}
+				sum += v[index];
+			else
+			{
+				count++;
+				sum = v[index];
+			}
 		}
 	}
 	count++;
