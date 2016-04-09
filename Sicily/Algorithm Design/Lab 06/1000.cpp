@@ -5,7 +5,7 @@ using namespace std;
 vector<long long> v;
 long long num;
 
-void lis(int begin, int end)
+void tail(int begin, int end)
 {
     if (begin == end)
     {
@@ -18,9 +18,9 @@ void lis(int begin, int end)
     {
         int mid = (begin + end) / 2;
         if (num < v[mid])
-            lis(begin, mid);
+            tail(begin, mid);
         else
-            lis(mid + 1, end);
+            tail(mid + 1, end);
     }
 }
 
@@ -31,7 +31,7 @@ int main(int argc, char const *argv[])
     while (N--)
     {
         cin >> num;
-        lis(0, v.size());
+        tail(0, v.size());
     }
     cout << v.size() << ' ' << *(--v.end()) << endl;
     return 0;
