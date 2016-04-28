@@ -4,8 +4,8 @@
 #include "algorithm"
 using namespace std;
 
-const int SIZEX = 8;
-const int SIZEY = 8;
+const int SIZEX = 6;
+const int SIZEY = 5;
 
 const int dir[][2] = {
     {-2, -1}, {-1, -2}, {2, 1}, {1, 2},
