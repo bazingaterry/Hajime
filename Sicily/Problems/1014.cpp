@@ -1,46 +1,24 @@
-#include <iostream>
+#include "iostream"
+#include "vector"
 using namespace std;
 
-int sum16 (int);
-int sum12 (int);
-int sum10 (int);
-
-int sum16 (int n)
+int sum(int num, int digit)
 {
-	int sum=0;
-	while (n!=0)
-	{
-		sum = sum + n%16;
-		n=n/16;
-	}
-	return sum;
-}
+    vector<int> v;
+    int result = 0;
+    while(num != 0)
+    {
+        v.push_back(num % digit);
+        num /= digit;
+    }
+    for(int i = 0; i < v.size(); i++)
+        result += v[i];
+    return result;
 
-int sum12 (int n)
+}int main(int argc, char const *argv[])
 {
-	int sum=0;
-	while (n!=0)
-	{
-		sum = sum + n%12;
-		n=n/12;
-	}
-	return sum;
-}
-
-int sum10 (int n)
-{
-	int sum=0;
-	while (n!=0)
-	{
-		sum = sum + n%10;
-		n=n/10;
-	}
-	return sum;
-}
-
-int main()
-{
-	for (int i=1000;i<=9999;i++) if(sum10(i)==sum16(i)&&sum12(i)==sum16(i)) cout << i <<endl;
-		
-	return 0;
+    for(int i = 1000; i <= 10000; i++)
+        if(sum(i, 10) == sum(i, 12) && sum(i, 10) == sum(i, 16))
+            cout << i << endl;
+    return 0;
 }
