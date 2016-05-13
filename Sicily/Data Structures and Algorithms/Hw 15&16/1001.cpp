@@ -45,7 +45,7 @@ int main(int argc, char const *argv[])
         path[y][v] = true;
     }
     for (int i = 1; i <= n; ++i)
-        if (!flag[i]) bfs(i);;
+        if (!flag[i]) bfs(i);
     cout << cnt << endl;
     return 0;
 }

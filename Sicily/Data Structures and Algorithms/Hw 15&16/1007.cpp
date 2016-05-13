@@ -36,21 +36,21 @@ inline int mst_prim()
         //  add the vertex into the tree
         dis[vertex] = 0;
         //  update distance
-        for (int i = 0; i < size; ++i)
-            dis[i] = min(dis[i], map[vertex][i]);
+        for (int j = 0; j < size; ++j)
+            dis[j] = min(dis[j], map[vertex][j]);
     }
     return maxRoad;
 }
 
 int main()
 {
-    int t, n;
+    int t;
     cin >> t;
     while(t--)
     {
-        cin >> n;
-        for (int i = 0; i < n; i++)
-            for (int j = 0; j < n; j++)
+        cin >> size;
+        for (int i = 0; i < size; i++)
+            for (int j = 0; j < size; j++)
                 cin >> map[i][j];
         cout << mst_prim() << endl;
         if(t) cout << endl;
