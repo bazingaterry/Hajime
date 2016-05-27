@@ -29,13 +29,12 @@ public:
             if (fields[i] == BLACK) return false;
         return true;
     }
+    void set(int array[], int size)
+    {
+        for(int i = 0; i < size; i++)
+            fields[array[i]] ^= 1;
+    }
 };
-
-void set(Grid &g, int array[], int size)
-{
-    for(int i = 0; i < size; i++)
-        g.fields[array[i]] ^= 1;
-}
 
 void click(Grid &g, int index)
 {
@@ -44,55 +43,55 @@ void click(Grid &g, int index)
         case 1:
         {
             int change[4] = {0, 1, 3, 4};
-            set(g, change, 4);
+            g.set(change, 4);
             break;
         }
         case 2:
         {
             int change[6] = {0, 1, 2, 3, 4, 5};
-            set(g, change, 6);
+            g.set(change, 6);
             break;
         }
         case 3:
         {
             int change[4] = {1, 2, 4, 5};
-            set(g, change, 4);
+            g.set(change, 4);
             break;
         }
         case 4:
         {
             int change[6] = {0, 1, 3, 4, 6, 7};
-            set(g, change, 6);
+            g.set(change, 6);
             break;
         }
         case 5:
         {
             int change[9] = {0, 1, 2, 3, 4, 5, 6, 7, 8};
-            set(g, change, 9);
+            g.set(change, 9);
             break;
         }
         case 6:
         {
             int change[6] = {1, 2, 4, 5, 7, 8};
-            set(g, change, 6);
+            g.set(change, 6);
             break;
         }
         case 7:
         {
             int change[4] = {3, 4, 6, 7};
-            set(g, change, 4);
+            g.set(change, 4);
             break;
         }
         case 8:
         {
             int change[6] = {3, 4, 5, 6, 7, 8};
-            set(g, change, 6);
+            g.set(change, 6);
             break;
         }
         case 9:
         {
             int change[4] = {4, 5, 7, 8};
-            set(g, change, 4);
+            g.set(change, 4);
             break;
         }
     }
