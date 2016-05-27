@@ -29,7 +29,8 @@ public:
     {
         return px >= 0 && px < n &&  py >= 0 && py < m
             && hx >= 0 && hx < n && hy >= 0 && hy < m
-            && map[px][py] == '.' && map[hx][hy] != '!';
+            && map[px][py] == '.' && map[hx][hy] != '!'
+            && !isVisited[px][py][hx][hy];
     }
     bool isSafe(const State &s) const
     {
@@ -44,12 +45,18 @@ public:
             case 'W': py--; break;
             case 'E': py++; break;
         }
+        int oldx = hx, oldy = hy;
         switch(dir2)
         {
             case 'N': hx--; break;
             case 'S': hx++; break;
             case 'W': hy--; break;
             case 'E': hy++; break;
+        }
+        if (map[hx][hy] == '#')
+        {
+            hx = oldx;
+            hy = oldy;
         }
         step++;
     }
@@ -69,17 +76,9 @@ int bfs()
             next.makeNextPosition(pMove[i], hMove[i]);
             if (next.isAvail())
             {
-                if (map[next.hx][next.hy] == '#')
-                {
-                    next.hx = que.front().hx;
-                    next.hy = que.front().hy;
-                }
-                if (!isVisited[next.px][next.py][next.hx][next.hy])
-                {
-                    isVisited[next.px][next.py][next.hx][next.hy] = true;
-                    if (next.isSafe(que.front())) return next.step;
-                    else que.push(next);
-                }
+                isVisited[next.px][next.py][next.hx][next.hy] = true;
+                if (next.isSafe(que.front())) return next.step;
+                else que.push(next);
             }
         }
         que.pop();
