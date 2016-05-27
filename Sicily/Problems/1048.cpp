@@ -34,70 +34,69 @@ public:
         for(int i = 0; i < size; i++)
             fields[array[i]] ^= 1;
     }
-};
-
-void click(Grid &g, int index)
-{
-    switch(index)
+    void click(int index)
     {
-        case 1:
+        switch(index)
         {
-            int change[4] = {0, 1, 3, 4};
-            g.set(change, 4);
-            break;
-        }
-        case 2:
-        {
-            int change[6] = {0, 1, 2, 3, 4, 5};
-            g.set(change, 6);
-            break;
-        }
-        case 3:
-        {
-            int change[4] = {1, 2, 4, 5};
-            g.set(change, 4);
-            break;
-        }
-        case 4:
-        {
-            int change[6] = {0, 1, 3, 4, 6, 7};
-            g.set(change, 6);
-            break;
-        }
-        case 5:
-        {
-            int change[9] = {0, 1, 2, 3, 4, 5, 6, 7, 8};
-            g.set(change, 9);
-            break;
-        }
-        case 6:
-        {
-            int change[6] = {1, 2, 4, 5, 7, 8};
-            g.set(change, 6);
-            break;
-        }
-        case 7:
-        {
-            int change[4] = {3, 4, 6, 7};
-            g.set(change, 4);
-            break;
-        }
-        case 8:
-        {
-            int change[6] = {3, 4, 5, 6, 7, 8};
-            g.set(change, 6);
-            break;
-        }
-        case 9:
-        {
-            int change[4] = {4, 5, 7, 8};
-            g.set(change, 4);
-            break;
+            case 1:
+            {
+                int change[4] = {0, 1, 3, 4};
+                this->set(change, 4);
+                break;
+            }
+            case 2:
+            {
+                int change[6] = {0, 1, 2, 3, 4, 5};
+                this->set(change, 6);
+                break;
+            }
+            case 3:
+            {
+                int change[4] = {1, 2, 4, 5};
+                this->set(change, 4);
+                break;
+            }
+            case 4:
+            {
+                int change[6] = {0, 1, 3, 4, 6, 7};
+                this->set(change, 6);
+                break;
+            }
+            case 5:
+            {
+                int change[9] = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+                this->set(change, 9);
+                break;
+            }
+            case 6:
+            {
+                int change[6] = {1, 2, 4, 5, 7, 8};
+                this->set(change, 6);
+                break;
+            }
+            case 7:
+            {
+                int change[4] = {3, 4, 6, 7};
+                this->set(change, 4);
+                break;
+            }
+            case 8:
+            {
+                int change[6] = {3, 4, 5, 6, 7, 8};
+                this->set(change, 6);
+                break;
+            }
+            case 9:
+            {
+                int change[4] = {4, 5, 7, 8};
+                this->set(change, 4);
+                break;
+            }
         }
     }
-}
+};
 
-void game()
+string game()
 {
     cin >> s;
     queue<Grid> q;
@@ -107,13 +106,9 @@ void game()
         for(int i = 1; i <= 9; i++)
         {
             Grid newGrid = q.front();
-            click(newGrid, i);
-            newGrid.op = q.front().op + (char)(i + '0');
-            if(newGrid.isFinish())
-            {
-                cout << newGrid.op << endl;
-                return;
-            }
+            newGrid.click(i);
+            newGrid.op += (char)(i + '0');
+            if(newGrid.isFinish()) return newGrid.op;
             q.push(newGrid);
         }
         q.pop();
@@ -124,5 +119,5 @@ int main(int argc, char const *argv[])
 {
     cin >> t;
     while(t--)
-        game();
+        cout << game() << endl;
 }
