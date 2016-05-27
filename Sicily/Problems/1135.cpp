@@ -31,9 +31,11 @@ public:
     }
 };
 
-inline bool in(const int x, const int y)
+inline bool canSearch(const int x, const int y, const int step)
 {
-    return (1 <= x && x <= row) && (1 <= y && y <= col);
+    return (1 <= x && x <= row) && (1 <= y && y <= col)
+        && !isVis[x][y][step]
+        && map[x][y] == PLAIN;
 }
 
 void read()
@@ -64,7 +66,7 @@ int canGo()
             {
                 int newx = q.front().x + to[j][0];
                 int newy = q.front().y + to[j][1];
-                if (in(newx, newy) && !isVis[newx][newy][0] && map[newx][newy] == PLAIN)
+                if (canSearch(newx, newy, 0))
                 {
                     if (newx == row && newy == col)
                     {
@@ -92,7 +94,7 @@ int canGo()
                         newx += to[j][0];
                         newy += to[j][1];
                     }
-                    if (in(newx, newy) && !isVis[newx][newy][q.front().remainDis - i] && map[newx][newy] == PLAIN)
+                    if (canSearch(newx, newy, q.front().remainDis - i))
                     {
                         if (newx == row && newy == col)
                         {
